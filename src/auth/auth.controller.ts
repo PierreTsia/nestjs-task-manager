@@ -13,6 +13,13 @@ export class AuthController {
     return this.authService.signUp(authCredentialDto);
   }
 
+  @Post('/signin')
+  async signin(
+    @Body(ValidationPipe) authCredentialDto: AuthCredentialsDto,
+  ): Promise<{ accessToken: string }> {
+    return await this.authService.signIn(authCredentialDto);
+  }
+
   @Get('/username/check')
   checkUsername(
     @Body(ValidationPipe) usernameDto: UsernameDto,

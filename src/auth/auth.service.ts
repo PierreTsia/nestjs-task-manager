@@ -1,13 +1,20 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto, UsernameDto } from './dto/auth-credentials.dto';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './types/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
+    private jwtService: JwtService,
   ) {}
 
   async signUp(signUpDto: AuthCredentialsDto): Promise<void> {
@@ -20,5 +27,17 @@ export class AuthService {
       throw new ConflictException(`username "${username}" already exists`);
     }
     return !found;
+  }
+
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<any> {
+    const username = await this.userRepository.validateUserPassword(
+      authCredentialsDto,
+    );
+    if (!username) {
+      throw new UnauthorizedException(`Invalid credentials`);
+    }
+    const payload: JwtPayload = { username };
+    const accessToken = await this.jwtService.sign(payload);
+    return { accessToken };
   }
 }

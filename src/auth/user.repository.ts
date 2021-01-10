@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { ErrorCode } from './utils/error-code.enum';
+import { ErrorCode } from './types/error-code.enum';
 import {
   ConflictException,
   InternalServerErrorException,
@@ -17,6 +17,7 @@ export class UserRepository extends Repository<User> {
     const user = new User();
     user.username = username;
     user.password = await this.hashPassword(password, salt);
+    user.salt = salt;
     try {
       await user.save();
     } catch ({ code }) {
@@ -31,4 +32,14 @@ export class UserRepository extends Repository<User> {
     password: string,
     salt: string,
   ): Promise<string> => await bcrypt.hash(password, salt);
+
+  validateUserPassword = async (authCredentialsDto: AuthCredentialsDto) => {
+    const { username, password } = authCredentialsDto;
+    const user = await this.findOne({ username });
+    if (user && (await user.validatePassword(password))) {
+      return user.username;
+    } else {
+      return false;
+    }
+  };
 }
