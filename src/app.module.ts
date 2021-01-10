@@ -12,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot(typeOrmConfig(process.env)),
+    TypeOrmModule.forRoot(typeOrmConfig),
     TasksModule,
     AuthModule,
   ],
