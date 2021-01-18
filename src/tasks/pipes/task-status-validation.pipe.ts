@@ -3,9 +3,9 @@ import { TaskStatus } from '../task-status.enum';
 
 export class TaskStatusValidationPipe implements PipeTransform {
   readonly ALLOWED_STATUSES: TaskStatus[] = Object.values(TaskStatus);
-  transform(value: any): any {
-    value = value.toUpperCase();
-    if (!this.isAllowedStatus(value)) {
+  async transform(value: any): Promise<any> {
+    value = value?.toUpperCase();
+    if (!value || !this.isAllowedStatus(value)) {
       throw new BadRequestException(`${value} is not a valid status`);
     }
     return value;
