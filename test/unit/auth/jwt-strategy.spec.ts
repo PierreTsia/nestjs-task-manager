@@ -1,7 +1,7 @@
-import { JwtStrategy } from './jwt.strategy';
-import { UserRepository } from './user.repository';
+import { JwtStrategy } from '../../../src/auth/jwt.strategy';
+import { UserRepository } from '../../../src/auth/user.repository';
 import { Test } from '@nestjs/testing';
-import { User } from './user.entity';
+import { User } from '../../../src/auth/user.entity';
 import { UnauthorizedException } from '@nestjs/common';
 
 const mockUserRepository = () => ({

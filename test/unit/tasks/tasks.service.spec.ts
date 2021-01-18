@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
-import { TasksService } from './tasks.service';
-import { TaskRepository } from './task.repository';
-import { GetTasksFilterDto } from './dto';
-import { TaskStatus } from './task-status.enum';
-import { Task } from './task.entity';
-import { User } from '../auth/user.entity';
+import { TasksService } from '../../../src/tasks/tasks.service';
+import { TaskRepository } from '../../../src/tasks/task.repository';
+import { GetTasksFilterDto } from '../../../src/tasks/dto';
+import { TaskStatus } from '../../../src/tasks/task-status.enum';
+import { Task } from '../../../src/tasks/task.entity';
+import { User } from '../../../src/auth/user.entity';
 import { NotFoundException } from '@nestjs/common';
 
 const MOCK_USER: User = { username: 'test', id: 1 } as User;

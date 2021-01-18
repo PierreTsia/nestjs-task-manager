@@ -1,4 +1,4 @@
-import { TaskStatusValidationPipe } from './task-status-validation.pipe';
+import { TaskStatusValidationPipe } from '../../../src/tasks/pipes/task-status-validation.pipe';
 import { Test } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 

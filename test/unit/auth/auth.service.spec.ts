@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
-import { AuthService } from './auth.service';
-import { UserRepository } from './user.repository';
+import { AuthService } from '../../../src/auth/auth.service';
+import { UserRepository } from '../../../src/auth/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 const authCredentialsDto = {
